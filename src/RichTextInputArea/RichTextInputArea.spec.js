@@ -6,6 +6,7 @@ import RichTextInputArea from './RichTextInputArea';
 import richTextInputAreaPrivateDriverFactory from './RichTextInputArea.private.uni.driver';
 import toolbarButtonStyles from './RichTextToolbarButton.scss';
 import { createRendererWithUniDriver } from '../../test/utils/react';
+import { scrollBehaviorPolyfill } from '../../testkit/polyfills';
 
 describe('RichTextInputArea', () => {
   const createDriver = createUniDriverFactory(
@@ -14,6 +15,14 @@ describe('RichTextInputArea', () => {
 
   // Keeps the parsed HTML value on prop change
   let currentValue;
+
+  beforeAll(() => {
+    scrollBehaviorPolyfill.install();
+  });
+
+  afterAll(() => {
+    scrollBehaviorPolyfill.uninstall();
+  });
 
   describe('Editor', () => {
     it('should render the text when `initialValue` prop is plain text', async () => {
@@ -248,7 +257,6 @@ describe('RichTextInputArea', () => {
     describe('Link', () => {
       const sampleText = 'Link';
       const sampleUrl = 'http://wix.com';
-      window.scrollTo = jest.fn();
 
       it('should render text as link after clicking the button and inserting required data', async () => {
         const driver = createDriver(
