@@ -41,6 +41,7 @@ import {ImageViewerDriver} from '../src/ImageViewer/ImageViewer.driver';
 import {TableActionCellDriver} from '../src/TableActionCell/TableActionCell.driver';
 import {InputDriver} from '../src/Input/Input.driver';
 import {InputAreaDriver} from '../src/InputArea/InputArea.driver';
+import {InputWithOptionsDriver} from '../src/InputWithOptions/InputWithOptions.driver';
 
 declare namespace VanillaTestkit {
   type VanillaTestkitFactory<T extends BaseDriver> = (
@@ -87,6 +88,7 @@ declare namespace VanillaTestkit {
   export const imageViewerTestkitFactory: VanillaTestkitFactory<ImageViewerDriver>;
   export const inputTestkitFactory: VanillaTestkitFactory<InputDriver>;
   export const inputAreaTestkitFactory: VanillaTestkitFactory<InputAreaDriver>;
+  export const inputWithOptionsTestkitFactory: VanillaTestkitFactory<InputWithOptionsDriver>;
 
   export const labelTestkitFactory: VanillaTestkitFactory<LabelDriver>;
   export const tableActionCellTestkitFactory: VanillaTestkitFactory<TableActionCellDriver>;

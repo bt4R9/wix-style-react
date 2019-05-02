@@ -22,7 +22,7 @@ function InputAreaWithMandatoryProps() {
   return <InputArea />;
 }
 
-function InputAreaWillAllProps() {
+function InputAreaWithAllProps() {
   return (
     <InputArea
       ariaControls="controls"

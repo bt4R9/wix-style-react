@@ -22,7 +22,7 @@ function InputWithMandatoryProps() {
   return <Input />;
 }
 
-function InputWillAllProps() {
+function InputWithAllProps() {
   return (
     <Input
       ariaControls="controls"
