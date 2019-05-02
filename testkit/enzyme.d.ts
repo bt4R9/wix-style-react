@@ -39,6 +39,7 @@ import {HeadingDriver} from '../src/Heading/Heading.driver';
 import {HighlighterDriver} from '../src/Highlighter/Highlighter.driver';
 import {IconButtonDriver} from '../src/IconButton/IconButton.uni.driver';
 import {ImageViewerDriver} from '../src/ImageViewer/ImageViewer.driver';
+import {TableActionCellDriver} from '../src/TableActionCell/TableActionCell.driver';
 
 declare namespace EnzymeTestkit {
   type EnzymeTestkitFactory<T extends BaseDriver> = (
@@ -85,6 +86,7 @@ declare namespace EnzymeTestkit {
   export const imageViewerTestkitFactory: EnzymeTestkitFactory<ImageViewerDriver>;
 
   export const labelTestkitFactory: EnzymeTestkitFactory<LabelDriver>;
+  export const tableActionCellTestkitFactory: EnzymeTestkitFactory<TableActionCellDriver>;
   export const tabsTestkitFactory: EnzymeTestkitFactory<TabsDriver>;
   export const tagTestkitFactory: EnzymeTestkitFactory<TagDriver>;
   export const textTestkitFactory: EnzymeTestkitFactory<TextDriver>;
