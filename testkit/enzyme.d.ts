@@ -85,7 +85,10 @@ declare namespace EnzymeTestkit {
   export const highlighterTestkitFactory: EnzymeTestkitFactory<HighlighterDriver>;
   export const iconButtonTestkitFactory: EnzymeUniTestkitFactory<IconButtonDriver>;
   export const imageViewerTestkitFactory: EnzymeTestkitFactory<ImageViewerDriver>;
+<<<<<<< HEAD
   export const inputTestkitFactory: EnzymeTestkitFactory<InputDriver>;
+=======
+>>>>>>> 0560f063... Add ImageViewer types
 
   export const labelTestkitFactory: EnzymeTestkitFactory<LabelDriver>;
   export const tableActionCellTestkitFactory: EnzymeTestkitFactory<TableActionCellDriver>;
