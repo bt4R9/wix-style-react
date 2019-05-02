@@ -27,10 +27,6 @@ class InteractiveEyeTest extends React.PureComponent {
   }
 }
 
-const commonProps = {
-  dataHook: storySettings.dataHook,
-};
-
 const tests = [
   {
     describe: 'basic',
@@ -129,7 +125,7 @@ tests.forEach(({ describe, its }) => {
   its.forEach(({ it, props }) => {
     storiesOf(`LinearProgressBar/${describe}`, module).add(it, () => (
       <div style={{ width: '40%' }}>
-        <LinearProgressBar {...commonProps} {...props} />
+        <LinearProgressBar dataHook={dataHook} {...props} />
       </div>
     ));
   });
