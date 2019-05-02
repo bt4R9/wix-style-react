@@ -84,10 +84,7 @@ declare namespace VanillaTestkit {
   export const highlighterTestkitFactory: VanillaTestkitFactory<HighlighterDriver>;
   export const iconButtonTestkitFactory: VanillaUniTestkitFactory<IconButtonDriver>;
   export const imageViewerTestkitFactory: VanillaTestkitFactory<ImageViewerDriver>;
-<<<<<<< HEAD
   export const inputTestkitFactory: VanillaTestkitFactory<InputDriver>;
-=======
->>>>>>> 0560f063... Add ImageViewer types
 
   export const labelTestkitFactory: VanillaTestkitFactory<LabelDriver>;
   export const tableActionCellTestkitFactory: VanillaTestkitFactory<TableActionCellDriver>;
