@@ -231,7 +231,7 @@
       "<rootDir>/dist/",
       "<rootDir>/node_modules/",
       "<rootDir>/test-runtime/",
-      "<rootDir>/scripts/generate-component/templates/"
+      "<rootDir>/generator"
     ]
   },
   "eslintConfig": {
