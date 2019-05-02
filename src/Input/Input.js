@@ -70,7 +70,11 @@ class Input extends Component {
       );
     }
 
-    if (this._isClearFeatureEnabled && this._isControlled) {
+    if (
+      this._isClearFeatureEnabled &&
+      this._isControlled &&
+      !props.updateControlledOnClear
+    ) {
       deprecationLog(
         `<Input/> - Clearing the value in a controlled component through onChange() will be deprectead in next major version. Pass updateControlledOnClear prop and use the onClear() callback to apply the new behavior`,
       );
