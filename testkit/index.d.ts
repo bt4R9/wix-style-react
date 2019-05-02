@@ -42,6 +42,7 @@ import {TableActionCellDriver} from '../src/TableActionCell/TableActionCell.driv
 import {InputDriver} from '../src/Input/Input.driver';
 import {InputAreaDriver} from '../src/InputArea/InputArea.driver';
 import {InputWithOptionsDriver} from '../src/InputWithOptions/InputWithOptions.driver';
+import {LinearProgressBarDriver} from '../src/LinearProgressBar/LinearProgressBar.driver';
 
 declare namespace VanillaTestkit {
   type VanillaTestkitFactory<T extends BaseDriver> = (
@@ -89,8 +90,9 @@ declare namespace VanillaTestkit {
   export const inputTestkitFactory: VanillaTestkitFactory<InputDriver>;
   export const inputAreaTestkitFactory: VanillaTestkitFactory<InputAreaDriver>;
   export const inputWithOptionsTestkitFactory: VanillaTestkitFactory<InputWithOptionsDriver>;
-
   export const labelTestkitFactory: VanillaTestkitFactory<LabelDriver>;
+  export const linearProgressBarTestkitFactory: VanillaTestkitFactory<LinearProgressBarDriver>;
+
   export const tableActionCellTestkitFactory: VanillaTestkitFactory<TableActionCellDriver>;
   export const tabsTestkitFactory: VanillaTestkitFactory<TabsDriver>;
   export const tagTestkitFactory: VanillaTestkitFactory<TagDriver>;

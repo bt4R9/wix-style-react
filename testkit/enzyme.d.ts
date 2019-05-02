@@ -43,6 +43,7 @@ import {TableActionCellDriver} from '../src/TableActionCell/TableActionCell.driv
 import {InputDriver} from '../src/Input/Input.driver';
 import {InputAreaDriver} from '../src/InputArea/InputArea.driver';
 import {InputWithOptionsDriver} from '../src/InputWithOptions/InputWithOptions.driver';
+import {LinearProgressBarDriver} from '../src/LinearProgressBar/LinearProgressBar.driver';
 
 declare namespace EnzymeTestkit {
   type EnzymeTestkitFactory<T extends BaseDriver> = (
@@ -90,8 +91,9 @@ declare namespace EnzymeTestkit {
   export const inputTestkitFactory: EnzymeTestkitFactory<InputDriver>;
   export const inputAreaTestkitFactory: EnzymeTestkitFactory<InputAreaDriver>;
   export const inputWithOptionsTestkitFactory: EnzymeTestkitFactory<InputWithOptionsDriver>;
-
   export const labelTestkitFactory: EnzymeTestkitFactory<LabelDriver>;
+  export const linearProgressBarTestkitFactory: EnzymeTestkitFactory<LinearProgressBarDriver>;
+
   export const tableActionCellTestkitFactory: EnzymeTestkitFactory<TableActionCellDriver>;
   export const tabsTestkitFactory: EnzymeTestkitFactory<TabsDriver>;
   export const tagTestkitFactory: EnzymeTestkitFactory<TagDriver>;
