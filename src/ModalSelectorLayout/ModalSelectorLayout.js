@@ -200,9 +200,8 @@ export default class ModalSelectorLayout extends WixComponent {
                   placeholder={searchPlaceholder}
                   onChange={this._onSearchChange}
                   onClear={this._onClear}
-                  {...(searchDebounceMs
-                    ? { debounceMs: searchDebounceMs }
-                    : { value: searchValue })}
+                  debounceMs={searchDebounceMs}
+                  value={searchValue}
                 />
               </div>
             )}

@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
+import { polyfill } from 'react-lifecycles-compat';
 import isEmpty from 'lodash/isEmpty';
 
 import InputWithOptions from '../InputWithOptions';
@@ -24,7 +25,7 @@ function debounce(fn, wait) {
 /**
  * Search component with suggestions based on input value listed in dropdown
  */
-export default class Search extends WixComponent {
+class Search extends WixComponent {
   static displayName = 'Search';
 
   static propTypes = {
@@ -41,17 +42,18 @@ export default class Search extends WixComponent {
     ...InputWithOptions.defaultProps,
     placeholder: 'Search',
     expandable: false,
+    debounceMs: 0,
+    onChange: () => {},
   };
 
   constructor(props) {
     super(props);
 
-    const initialValue = (!this._isControlled && props.defaultValue) || '';
+    const initialValue = this._getIsControlled()
+      ? props.value
+      : props.defaultValue || '';
 
-    this._onChangeDebounced = debounce(
-      this._onChangeDebounced,
-      props.debounceMs,
-    );
+    this._onChangeDebounced = this._makeDebounced();
 
     this.state = {
       inputValue: initialValue,
@@ -59,15 +61,31 @@ export default class Search extends WixComponent {
     };
   }
 
-  get _isControlled() {
-    return 'value' in this.props && 'onChange' in this.props;
+  getDerivedStateFromProps(props, state) {
+    return {
+      ...state,
+      inputValue: props.value,
+    };
   }
 
-  get _isDebounced() {
-    return typeof this.props.debounceMs === 'number';
+  componentDidUpdate(prevProps) {
+    if (prevProps.value !== this.props.value) {
+      this.setState({ inputValue: this.props.value });
+    }
+
+    if (prevProps.debounceMs !== this.props.debounceMs) {
+      this._onChangeDebounced = this._makeDebounced();
+    }
   }
 
-  get _filteredOptions() {
+  _makeDebounced = () =>
+    this.props.debounceMs > 0
+      ? debounce(this.props.onChange, this.props.debounceMs)
+      : this.props.onChange;
+
+  _getIsControlled = () => 'value' in this.props && 'onChange' in this.props;
+
+  _getFilteredOptions = () => {
     const { options, predicate } = this.props;
 
     const searchText = this._currentValue();
@@ -76,28 +94,24 @@ export default class Search extends WixComponent {
     }
     const filterFn = predicate || this._stringFilter;
     return options.filter(filterFn);
-  }
+  };
 
   _stringFilter = option => {
     const searchText = this._currentValue();
     return StringUtils.includesCaseInsensitive(option.value, searchText.trim());
   };
 
-  _onChangeDebounced = e => this.props.onChange && this.props.onChange(e);
-
   _onChange = e => {
-    if (this._isControlled && !this._isDebounced) {
-      this.props.onChange(e);
-    } else {
-      this.setState({
-        inputValue: e.target.value,
-      });
-    }
+    e.persist();
 
-    if (this._isDebounced) {
-      // need a copy of the event because of the dobunce
-      this._onChangeDebounced({ ...e });
-    }
+    this.setState(
+      {
+        inputValue: e.target.value,
+      },
+      () => {
+        this._onChangeDebounced(e);
+      },
+    );
   };
 
   _onClear = event => {
@@ -106,7 +120,7 @@ export default class Search extends WixComponent {
 
     const stateChanges = {};
 
-    if (this._isControlled && !this._isDebounced) {
+    if (this._getIsControlled()) {
       stateChanges.inputValue = '';
     }
 
@@ -120,17 +134,7 @@ export default class Search extends WixComponent {
     }
   };
 
-  _currentValue = () => {
-    let value;
-
-    if (this._isControlled && !this._isDebounced) {
-      value = this.props.value;
-    } else {
-      value = this.state.inputValue;
-    }
-
-    return value;
-  };
+  _currentValue = () => this.state.inputValue;
 
   _onBlur = () => {
     const { onBlur } = this.props;
@@ -168,6 +172,8 @@ export default class Search extends WixComponent {
   };
 
   render() {
+    const { defaultValue, ...restProps } = this.props;
+
     const wrapperClasses = classNames({
       [styles.expandableStyles]: this.props.expandable,
       [styles.collapsed]: this.state.collapsed && this.props.expandable,
@@ -181,7 +187,8 @@ export default class Search extends WixComponent {
         onMouseDown={this._onWrapperMouseDown}
       >
         <InputWithOptions
-          {...this.props}
+          {...restProps}
+          value={this.state.inputValue}
           ref={r => (this.searchInput = r)}
           roundInput
           prefix={
@@ -192,7 +199,7 @@ export default class Search extends WixComponent {
           menuArrow={false}
           clearButton
           closeOnSelect
-          options={this._filteredOptions}
+          options={this._getFilteredOptions()}
           onClear={this._onClear}
           onChange={this._onChange}
           onBlur={this._onBlur}
@@ -202,3 +209,5 @@ export default class Search extends WixComponent {
     );
   }
 }
+
+export default polyfill(Search);
