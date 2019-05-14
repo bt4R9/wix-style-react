@@ -294,4 +294,55 @@ describe('Search', () => {
       expect(driver.isCollapsed()).toBeFalsy();
     });
   });
+
+  describe('debounced', () => {
+    it('should debounce onChange callback if debounceMs prop is provided', () => {
+      jest.useFakeTimers();
+
+      const onChangeSpy = jest.fn();
+      const driver = createDriver(
+        <Search onChange={onChangeSpy} debounceMs={100} />,
+      );
+
+      driver.inputDriver.enterText('f');
+      jest.advanceTimersByTime(99);
+
+      expect(onChangeSpy).not.toHaveBeenCalled();
+
+      driver.inputDriver.enterText('fo');
+      jest.advanceTimersByTime(99);
+
+      expect(onChangeSpy).not.toHaveBeenCalled();
+
+      driver.inputDriver.enterText('foo');
+      jest.advanceTimersByTime(100);
+
+      expect(onChangeSpy).toHaveBeenCalledTimes(1);
+      expect(onChangeSpy.mock.calls[0][0].target.value).toBe('foo');
+    });
+
+    it('should not debounce onChange callback if debounceMs prop is not provided', () => {
+      jest.useFakeTimers();
+
+      const onChangeSpy = jest.fn();
+      const driver = createDriver(<Search onChange={onChangeSpy} />);
+
+      driver.inputDriver.enterText('f');
+
+      expect(onChangeSpy).toHaveBeenCalledTimes(1);
+
+      driver.inputDriver.enterText('fo');
+      jest.advanceTimersByTime(99);
+
+      expect(onChangeSpy).toHaveBeenCalledTimes(2);
+
+      driver.inputDriver.enterText('foo');
+      jest.advanceTimersByTime(100);
+
+      expect(onChangeSpy).toHaveBeenCalledTimes(3);
+      expect(onChangeSpy.mock.calls[0][0].target.value).toBe('f');
+      expect(onChangeSpy.mock.calls[1][0].target.value).toBe('fo');
+      expect(onChangeSpy.mock.calls[2][0].target.value).toBe('foo');
+    });
+  });
 });
