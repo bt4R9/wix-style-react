@@ -53,7 +53,7 @@ class Search extends WixComponent {
       ? props.value
       : props.defaultValue || '';
 
-    this._onChangeDebounced = this._makeDebounced();
+    this._onChangeHandler = this._makeOnChange();
 
     this.state = {
       inputValue: initialValue,
@@ -74,11 +74,11 @@ class Search extends WixComponent {
     }
 
     if (prevProps.debounceMs !== this.props.debounceMs) {
-      this._onChangeDebounced = this._makeDebounced();
+      this._onChangeHandler = this._makeOnChange();
     }
   }
 
-  _makeDebounced = () =>
+  _makeOnChange = () =>
     this.props.debounceMs > 0
       ? debounce(this.props.onChange, this.props.debounceMs)
       : this.props.onChange;
@@ -109,7 +109,7 @@ class Search extends WixComponent {
         inputValue: e.target.value,
       },
       () => {
-        this._onChangeDebounced(e);
+        this._onChangeHandler(e);
       },
     );
   };
