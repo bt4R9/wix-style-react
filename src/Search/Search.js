@@ -61,10 +61,12 @@ class Search extends WixComponent {
     };
   }
 
-  getDerivedStateFromProps(props, state) {
+  static getDerivedStateFromProps(props, state) {
+    const isControlled = 'value' in props && 'onChange' in props;
+
     return {
       ...state,
-      inputValue: props.value,
+      inputValue: isControlled ? props.value : state.inputValue,
     };
   }
 
