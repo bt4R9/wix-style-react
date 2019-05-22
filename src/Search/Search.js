@@ -61,15 +61,6 @@ class Search extends WixComponent {
     };
   }
 
-  static getDerivedStateFromProps(props, state) {
-    const isControlled = 'value' in props && 'onChange' in props;
-
-    return {
-      ...state,
-      inputValue: isControlled ? props.value : state.inputValue,
-    };
-  }
-
   componentDidUpdate(prevProps) {
     if (prevProps.value !== this.props.value) {
       this.setState({ inputValue: this.props.value });
