@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import { polyfill } from 'react-lifecycles-compat';
 import isEmpty from 'lodash/isEmpty';
 
 import InputWithOptions from '../InputWithOptions';
@@ -203,4 +202,4 @@ class Search extends WixComponent {
   }
 }
 
-export default polyfill(Search);
+export default Search;
